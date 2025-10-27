@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://cu0vt3mubgpvv"]
+
+[ext_resource type="Script" uid="uid://c1hjineue75su" path="res://scripts/items/plant.gd" id="1_46qjp"]
+[ext_resource type="Texture2D" uid="uid://bajnskr04k0yf" path="res://assets/sprites/plant.png" id="2_vj3nr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kp0sx"]
+atlas = ExtResource("2_vj3nr")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b1xpq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kp0sx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_70e67"]
+size = Vector2(6, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vj3nr"]
+size = Vector2(8, 6)
+
+[node name="Plant" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_46qjp")
+can_throw = true
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_b1xpq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_70e67")
+
+[node name="PickupArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_vj3nr")
+debug_color = Color(0.76984334, 0.38476425, 0.59244937, 0.41960785)

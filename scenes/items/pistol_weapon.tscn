@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://udvpuv3oqktu"]
+
+[ext_resource type="Script" uid="uid://8m301gbcqjcq" path="res://scripts/items/pistol_weapon.gd" id="1_nfltj"]
+[ext_resource type="Texture2D" uid="uid://k8fhhw0s75p4" path="res://assets/sprites/gun.png" id="2_1qtxr"]
+[ext_resource type="PackedScene" uid="uid://bnsygj7jy5yv4" path="res://scenes/objects/bullet.tscn" id="2_fc4ev"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fc4ev"]
+size = Vector2(6, 3)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nfltj"]
+size = Vector2(9, 6.5)
+
+[node name="PistolWeapon" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_nfltj")
+bullet_scene = ExtResource("2_fc4ev")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_1qtxr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0.5)
+shape = SubResource("RectangleShape2D_fc4ev")
+
+[node name="PickupArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_nfltj")
+debug_color = Color(0.76984334, 0.38476425, 0.59244937, 0.41960785)

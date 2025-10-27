@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=4 uid="uid://n61hbnuun7u2"]
+
+[ext_resource type="Script" uid="uid://c8cgskseodc5s" path="res://scripts/levels/level_1.gd" id="1_ksju7"]
+[ext_resource type="PackedScene" uid="uid://b8q1be34jw5ve" path="res://scenes/player/player.tscn" id="2_6iamk"]
+[ext_resource type="TileSet" uid="uid://bbeunnjqgmomh" path="res://scenes/environment/tileset_ground.tres" id="3_nsrm0"]
+[ext_resource type="PackedScene" uid="uid://cu0vt3mubgpvv" path="res://scenes/items/plant.tscn" id="4_x42e6"]
+[ext_resource type="PackedScene" uid="uid://udvpuv3oqktu" path="res://scenes/items/pistol_weapon.tscn" id="5_6761a"]
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_ksju7")
+
+[node name="Background" type="ColorRect" parent="."]
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Level 1"
+
+[node name="BackButton" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Back To Menu"
+
+[node name="Player" parent="." instance=ExtResource("2_6iamk")]
+position = Vector2(339, 92)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAHAAUAAQACAAEAAAAHAAQAAQACAAEAAAAIAAMAAQABAAIAAAAJAAMAAQABAAIAAAAKAAMAAQABAAIAAAALAAMAAQABAAIAAAAMAAMAAQABAAIAAAANAAMAAQABAAIAAAAOAAMAAQABAAIAAAAPAAMAAQABAAIAAAAQAAMAAQABAAIAAAARAAMAAQABAAIAAAASAAMAAQABAAIAAAATAAMAAQABAAIAAAAHAAYAAQADAAEAAAAIAAYAAQABAAAAAAAJAAYAAQACAAAAAAAHAAMAAQADAAAAAAAJAAcAAQACAAIAAAAIAAcAAQADAAAAAAAIAAgAAQACAAEAAAAIAAkAAQACAAEAAAAJAAwAAQABAAAAAAAKAAwAAQABAAAAAAALAAwAAQABAAAAAAAMAAwAAQABAAAAAAANAAsAAQAAAAAAAAAOAAsAAQABAAAAAAANAAwAAQAEAAEAAAAIAAwAAQADAAEAAAAIAAsAAQACAAEAAAAIAAoAAQACAAEAAAAJAAsAAQAFAAcAAAAKAAsAAQAFAAcAAAALAAsAAQAFAAcAAAAMAAsAAQAFAAcAAAAPAAsAAQABAAAAAAAQAAsAAQACAAAAAAAQAAwAAQADAAEAAAARAAwAAQABAAAAAAASAAwAAQABAAAAAAATAAwAAQABAAAAAAAUAAsAAQAAAAEAAAAUAAoAAQAAAAEAAAAUAAkAAQAAAAEAAAAUAAgAAQAAAAEAAAAVAAcAAQABAAAAAAAWAAcAAQABAAAAAAAXAAcAAQABAAAAAAAYAAYAAQAAAAEAAAAYAAUAAQAAAAEAAAAYAAQAAQAAAAEAAAAUAAMAAQABAAIAAAAVAAMAAQABAAIAAAAWAAMAAQABAAIAAAAXAAMAAQABAAIAAAAYAAcAAQAEAAEAAAAUAAcAAQAAAAAAAAAYAAMAAQAEAAAAAAAUAAwAAQAEAAEAAAA=")
+tile_set = ExtResource("3_nsrm0")
+
+[node name="Plant" parent="." instance=ExtResource("4_x42e6")]
+position = Vector2(358, 76)
+
+[node name="PistolWeapon" parent="." instance=ExtResource("5_6761a")]
+position = Vector2(372, 86)
