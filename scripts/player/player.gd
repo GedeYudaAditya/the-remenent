@@ -12,7 +12,7 @@ extends CharacterBody2D
 @export var friction := 380.0
 
 # === THROW CONFIG ===
-@export var throw_angle := 60.0  # derajat ke atas
+@export var throw_angle := 60.0
 @export var max_throw_force := 350.0
 @export var min_throw_force := 150.0
 
@@ -21,10 +21,15 @@ var held_item: Node = null
 var was_on_floor := true
 var jump_time := 0.0
 var hold_time := 0.0
+var is_looking_back := false
+var look_back_timer := 0.0
+var aim_direction := Vector2.RIGHT  # default arah tembak
+
 
 func _physics_process(delta):
 	var direction := Input.get_axis("left", "right")
 	var looking_up := Input.is_action_pressed("up")
+	var looking_down := Input.is_action_pressed("down")
 
 	# === GERAK HORIZONTAL ===
 	if direction != 0:
@@ -50,10 +55,13 @@ func _physics_process(delta):
 	# === ANIMASI ===
 	if not is_on_floor():
 		# Saat di udara
-		if looking_up:
+		if looking_down:
+			sprite_2d.play("look_down") # nanti bisa untuk shoot down
+		elif looking_up:
 			sprite_2d.play("jump_look_up")
 		else:
 			sprite_2d.play("jump")
+
 	else:
 		# Saat di tanah
 		if looking_up:
@@ -61,7 +69,30 @@ func _physics_process(delta):
 				sprite_2d.play("run_look_up")
 			else:
 				sprite_2d.play("look_up")
-		else:
+
+		# --- LOOK BACK: hanya aktif saat tombol down baru ditekan ---
+		elif Input.is_action_just_pressed("down"):
+			is_looking_back = true
+			look_back_timer = 0.7
+			sprite_2d.play("look_back")
+
+		elif is_looking_back:
+			# Batalkan look_back jika tombol dilepas / bergerak / loncat
+			if Input.is_action_just_released("down") \
+			or abs(direction) > 0 \
+			or looking_up \
+			or Input.is_action_pressed("jump") \
+			or Input.is_action_pressed("attack"):
+				is_looking_back = false
+				sprite_2d.play("idle")
+			else:
+				look_back_timer -= delta
+				if look_back_timer <= 0.0:
+					is_looking_back = false
+					sprite_2d.play("idle")
+
+		# --- Normal movement animation ---
+		elif not is_looking_back:
 			if abs(direction) > 0:
 				sprite_2d.play("run")
 			else:
@@ -81,12 +112,30 @@ func _physics_process(delta):
 		elif Input.is_action_just_released("throw"):
 			throw_item(looking_up)
 
-	# === UPDATE ARAH SPRITE ===
+	# === ARAH SPRITE ===
 	if direction != 0:
 		sprite_2d.flip_h = direction < 0
 	
-	if Input.is_action_just_pressed("attack") and held_item and held_item is WeaponBase:
-		held_item.use()
+	# Arah aim tergantung kondisi player
+	if not is_on_floor() and Input.is_action_pressed("down"):
+		aim_direction = Vector2.DOWN
+	elif Input.is_action_pressed("up"):
+		aim_direction = Vector2.UP
+	elif sprite_2d.flip_h:
+		aim_direction = Vector2.LEFT
+	else:
+		aim_direction = Vector2.RIGHT
+
+	# === WEAPON USAGE ===
+	if held_item and held_item is WeaponBase:
+		var weapon = held_item as WeaponBase
+		if weapon.automatic:
+			if Input.is_action_pressed("attack"):
+				weapon.use()
+		else:
+			if Input.is_action_just_pressed("attack"):
+				weapon.use()
+
 
 
 # =======================================
