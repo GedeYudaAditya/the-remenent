@@ -24,6 +24,6 @@ func attack():
 
 	# arah tembakan mengikuti arah player
 	var dir = Vector2.RIGHT if not holder.sprite_2d.flip_h else Vector2.LEFT
-	bullet.shoot(dir, shoot_speed)
+	bullet.shoot(dir)
 
 	print("%s menembak peluru!" % item_name)

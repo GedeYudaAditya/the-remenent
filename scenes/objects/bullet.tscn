@@ -6,7 +6,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r481e"]
 size = Vector2(2, 2)
 
-[node name="Bullet" type="Area2D"]
+[node name="Bullet" type="CharacterBody2D"]
+collision_mask = 2
 script = ExtResource("1_ds4j2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
