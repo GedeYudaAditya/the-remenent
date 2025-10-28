@@ -25,6 +25,8 @@ var is_looking_back := false
 var look_back_timer := 0.0
 var aim_direction := Vector2.RIGHT  # default arah tembak
 
+func _process(delta):
+	handle_attack_input()
 
 func _physics_process(delta):
 	var direction := Input.get_axis("left", "right")
@@ -126,15 +128,18 @@ func _physics_process(delta):
 	else:
 		aim_direction = Vector2.RIGHT
 
-	# === WEAPON USAGE ===
-	if held_item and held_item is WeaponBase:
-		var weapon = held_item as WeaponBase
-		if weapon.automatic:
-			if Input.is_action_pressed("attack"):
-				weapon.use()
-		else:
-			if Input.is_action_just_pressed("attack"):
-				weapon.use()
+	## === WEAPON USAGE ===
+	#if held_item and held_item is WeaponBase:
+		#var weapon = held_item as WeaponBase
+		#if weapon.automatic:
+			#if Input.is_action_pressed("attack"):
+				#print("Press Attack Auto")
+				#weapon.use()
+		#else:
+			#print("Can Attack")
+			#if Input.is_action_just_pressed("attack"):
+				#print("Press Attack")
+				#weapon.use()
 
 
 
@@ -194,3 +199,21 @@ func throw_item(looking_up: bool):
 		# Reset
 		held_item = null
 		hold_time = 0.0
+		
+func handle_attack_input():
+	var attack_auto := Input.is_action_pressed("attack")
+	var attack := Input.is_action_just_pressed("attack")
+	if held_item and held_item is WeaponBase:
+		var weapon = held_item as WeaponBase
+		if weapon.automatic:
+			if attack_auto:
+				weapon.use()
+		
+		else:
+			if attack:
+				weapon.use()
+		
+		# Di saat tombol dilepas
+		if Input.is_action_just_released("attack"):
+			if weapon:
+				weapon.stop_use()

@@ -16,6 +16,7 @@ collision_mask = 2
 script = ExtResource("1_nfltj")
 bullet_scene = ExtResource("2_fc4ev")
 cooldown = 0.1
+ammo = -1
 hold_offset = Vector2(3, 3)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
