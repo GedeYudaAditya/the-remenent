@@ -1,7 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://b8q1be34jw5ve"]
+[gd_scene load_steps=22 format=3 uid="uid://b8q1be34jw5ve"]
 
 [ext_resource type="Script" uid="uid://677cfshdeidm" path="res://scripts/player/player.gd" id="1_8afob"]
 [ext_resource type="Texture2D" uid="uid://bow5thfjayf0r" path="res://assets/sprites/player.png" id="2_dovo2"]
+[ext_resource type="Texture2D" uid="uid://bslgbme00ahbg" path="res://assets/sprites/smoke.png" id="3_gmlin"]
+
+[sub_resource type="Gradient" id="Gradient_dovo2"]
+colors = PackedColorArray(1, 1, 1, 1, 0.2677903, 0.2677903, 0.2677903, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lvxji"]
 atlas = ExtResource("2_dovo2")
@@ -165,6 +169,22 @@ size = Vector2(4, 13)
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 2
 script = ExtResource("1_8afob")
+jetpack_unlocked = true
+jetpack_type = "Booster_0_8"
+jetpack_dash_force = 300.0
+
+[node name="JetpackTrail" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 30
+texture = ExtResource("3_gmlin")
+lifetime = 0.6
+speed_scale = 3.0
+randomness = 1.0
+direction = Vector2(0, 1)
+gravity = Vector2(0, 150)
+scale_amount_min = 0.7
+scale_amount_max = 0.8
+color_ramp = SubResource("Gradient_dovo2")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 2.3841858e-07)
